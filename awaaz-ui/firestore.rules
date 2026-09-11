@@ -1,0 +1,73 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+
+    function isEditor() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "editor";
+    }
+
+    function isStaff() {
+      return isAdmin() || isEditor();
+    }
+
+    match /users/{userId} {
+      // A signed-in user can read/update only their own profile.
+      allow read: if signedIn() && (request.auth.uid == userId || isAdmin());
+
+      // New accounts are always created as normal users. The client cannot self-promote.
+      allow create: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.role == "user"
+        && request.resource.data.email == request.auth.token.email;
+
+      // Users can edit their own non-role profile fields. Only admins can change roles.
+      allow update: if isAdmin()
+        || (signedIn()
+          && request.auth.uid == userId
+          && request.resource.data.role == resource.data.role);
+
+      allow delete: if isAdmin();
+    }
+
+    match /posts/{postId} {
+      // Public website can read published posts. Staff can read everything.
+      allow read: if isStaff() || resource.data.status == "published";
+
+      // Admins can create anything. Editors can create only their own drafts.
+      allow create: if isAdmin()
+        || (isEditor()
+          && request.resource.data.authorId == request.auth.uid
+          && request.resource.data.status == "draft");
+
+      // Admins can edit anything. Editors can edit only their own drafts.
+      allow update: if isAdmin()
+        || (isEditor()
+          && resource.data.authorId == request.auth.uid
+          && resource.data.status == "draft"
+          && request.resource.data.authorId == request.auth.uid
+          && request.resource.data.status == "draft");
+
+      // Editors may delete only their own drafts. Admins can delete anything.
+      allow delete: if isAdmin()
+        || (isEditor()
+          && resource.data.authorId == request.auth.uid
+          && resource.data.status == "draft");
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
