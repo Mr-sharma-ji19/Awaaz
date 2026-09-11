@@ -119,11 +119,12 @@ function getSortTime(post) {
 
 
 /* =========================================================
-   FIRESTORE LOAD
+   FIRESTORE
 ========================================================= */
 
 async function loadPosts() {
   try {
+
     const q = query(
       collection(db, "posts"),
       where("status", "==", "published")
@@ -133,6 +134,7 @@ async function loadPosts() {
 
     allPosts = snap.docs
       .map((doc) => {
+
         const data = doc.data();
 
         return {
@@ -140,12 +142,14 @@ async function loadPosts() {
           ...data,
           date: formatDate(data.createdAt)
         };
+
       })
       .sort(
         (a, b) =>
           getSortTime(b) -
           getSortTime(a)
       );
+
 
     console.info(
       `Awaaz: ${allPosts.length} published post(s) loaded.`
@@ -163,17 +167,20 @@ async function loadPosts() {
         getSortTime(b) -
         getSortTime(a)
     );
+
   }
+
 
   render();
 }
 
 
 /* =========================================================
-   GENERIC STORY CARD
+   STORY CARD
 ========================================================= */
 
 function createStoryCard(post) {
+
   return `
     <article
       class="post reveal"
@@ -197,17 +204,27 @@ function createStoryCard(post) {
       <div class="post-copy">
 
         <span class="post-cat">
-          ${escapeHtml(post.category || "कहानी")}
+
+          ${escapeHtml(
+            post.category ||
+              "कहानी"
+          )}
+
           ${
             post.date
-              ? ` — ${escapeHtml(post.date)}`
+              ? ` — ${escapeHtml(
+                  post.date
+                )}`
               : ""
           }
+
         </span>
 
 
         <h3>
-          ${escapeHtml(post.title || "")}
+          ${escapeHtml(
+            post.title || ""
+          )}
         </h3>
 
 
@@ -215,7 +232,9 @@ function createStoryCard(post) {
           post.subtitle
             ? `
               <p>
-                ${escapeHtml(post.subtitle)}
+                ${escapeHtml(
+                  post.subtitle
+                )}
               </p>
             `
             : ""
@@ -234,7 +253,7 @@ function createStoryCard(post) {
 
 
 /* =========================================================
-   NEWS DETECTION
+   NEWS
 ========================================================= */
 
 function isNewsPost(post) {
@@ -255,19 +274,16 @@ function isNewsPost(post) {
 }
 
 
-/* =========================================================
-   NEWS SECTION
-========================================================= */
-
 function renderNews(posts) {
 
-  const newsPosts = (posts || [])
-    .filter(isNewsPost)
-    .sort(
-      (a, b) =>
-        getSortTime(b) -
-        getSortTime(a)
-    );
+  const newsPosts =
+    (posts || [])
+      .filter(isNewsPost)
+      .sort(
+        (a, b) =>
+          getSortTime(b) -
+          getSortTime(a)
+      );
 
 
   const newsCount =
@@ -329,10 +345,6 @@ function renderNews(posts) {
     `${newsPosts.length} NEWS`;
 
 
-  /* -----------------------------------------
-     No News Yet
-  ----------------------------------------- */
-
   if (!newsPosts.length) {
 
     newsSide.innerHTML = `
@@ -375,6 +387,7 @@ function renderNews(posts) {
 
 
     if (mainImage) {
+
       mainImage.src =
         "https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1800&q=85";
 
@@ -403,10 +416,6 @@ function renderNews(posts) {
     return;
   }
 
-
-  /* -----------------------------------------
-     Featured News
-  ----------------------------------------- */
 
   const main =
     newsPosts[0];
@@ -450,12 +459,9 @@ function renderNews(posts) {
 
     readButton.onclick =
       () => openReader(main.id);
+
   }
 
-
-  /* -----------------------------------------
-     Left News List
-  ----------------------------------------- */
 
   const sidePosts =
     newsPosts.slice(1, 6);
@@ -469,7 +475,9 @@ function renderNews(posts) {
             (post) => `
               <article
                 class="side-story news-side-story"
-                data-news-id="${escapeHtml(post.id)}"
+                data-news-id="${escapeHtml(
+                  post.id
+                )}"
               >
 
                 <span class="section-tag">
@@ -523,17 +531,15 @@ function renderNews(posts) {
         `;
 
 
-  /* -----------------------------------------
-     Briefing List
-  ----------------------------------------- */
-
   newsBriefList.innerHTML =
     newsPosts
       .slice(0, 5)
       .map(
         (post) => `
           <li
-            data-news-id="${escapeHtml(post.id)}"
+            data-news-id="${escapeHtml(
+              post.id
+            )}"
           >
             ${escapeHtml(
               post.title || ""
@@ -543,10 +549,6 @@ function renderNews(posts) {
       )
       .join("");
 
-
-  /* -----------------------------------------
-     News Clicks
-  ----------------------------------------- */
 
   newsSide
     .querySelectorAll(
@@ -584,6 +586,310 @@ function renderNews(posts) {
 
 
 /* =========================================================
+   ENTERTAINMENT
+========================================================= */
+
+function isEntertainmentPost(post) {
+
+  const category =
+    String(
+      post?.category || ""
+    )
+      .trim()
+      .toLowerCase();
+
+
+  return (
+    category === "मनोरंजन" ||
+    category === "entertainment" ||
+    category.includes("entertain")
+  );
+}
+
+
+function renderEntertainment(posts) {
+
+  const entertainmentPosts =
+    (posts || [])
+      .filter(
+        isEntertainmentPost
+      )
+      .sort(
+        (a, b) =>
+          getSortTime(b) -
+          getSortTime(a)
+      );
+
+
+  const countEl =
+    document.getElementById(
+      "entertainmentCount"
+    );
+
+  const mainEl =
+    document.getElementById(
+      "entMain"
+    );
+
+  const sideEl =
+    document.getElementById(
+      "entSideList"
+    );
+
+
+  if (
+    !countEl ||
+    !mainEl ||
+    !sideEl
+  ) {
+    return;
+  }
+
+
+  countEl.textContent =
+    `${entertainmentPosts.length} POSTS`;
+
+
+  if (!entertainmentPosts.length) {
+
+    mainEl.innerHTML = `
+      <div class="ent-empty">
+
+        <span class="section-tag">
+          मनोरंजन
+        </span>
+
+        <h3>
+          अभी कोई प्रकाशित मनोरंजन पोस्ट नहीं है।
+        </h3>
+
+        <p>
+          Admin Studio में category
+          <b>मनोरंजन</b> चुनकर post publish करें।
+        </p>
+
+      </div>
+    `;
+
+
+    sideEl.innerHTML = `
+      <div class="ent-side-empty">
+        <span class="section-tag">
+          MANORANJAN
+        </span>
+
+        <p>
+          नई मनोरंजन खबरें और कहानियाँ
+          यहाँ अपने आप दिखाई देंगी।
+        </p>
+      </div>
+    `;
+
+
+    return;
+  }
+
+
+  const main =
+    entertainmentPosts[0];
+
+
+  mainEl.innerHTML = `
+    <article
+      class="ent-feature"
+      data-ent-id="${escapeHtml(
+        main.id
+      )}"
+    >
+
+      <div class="ent-feature-img">
+
+        <img
+          src="${escapeHtml(
+            main.image ||
+              "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1600&q=85"
+          )}"
+          alt="${escapeHtml(
+            main.title || ""
+          )}"
+        >
+
+      </div>
+
+
+      <div class="ent-feature-copy">
+
+        <span class="section-tag">
+          ${escapeHtml(
+            main.category ||
+              "मनोरंजन"
+          )}
+
+          ${
+            main.date
+              ? ` — ${escapeHtml(
+                  main.date
+                )}`
+              : ""
+          }
+
+        </span>
+
+
+        <h3>
+          ${escapeHtml(
+            main.title || ""
+          )}
+        </h3>
+
+
+        ${
+          main.subtitle
+            ? `
+              <p>
+                ${escapeHtml(
+                  main.subtitle
+                )}
+              </p>
+            `
+            : ""
+        }
+
+
+        <span class="post-read">
+          पढ़ें / सुनें ↗
+        </span>
+
+      </div>
+
+    </article>
+  `;
+
+
+  const sidePosts =
+    entertainmentPosts.slice(
+      1,
+      6
+    );
+
+
+  sideEl.innerHTML =
+    sidePosts.length
+
+      ? sidePosts
+          .map(
+            (post) => `
+              <article
+                class="ent-side-item"
+                data-ent-id="${escapeHtml(
+                  post.id
+                )}"
+              >
+
+                <div class="ent-side-image">
+
+                  <img
+                    src="${escapeHtml(
+                      post.image ||
+                        "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=80"
+                    )}"
+                    alt="${escapeHtml(
+                      post.title ||
+                        ""
+                    )}"
+                    loading="lazy"
+                  >
+
+                </div>
+
+
+                <div>
+
+                  <span class="section-tag">
+                    ${escapeHtml(
+                      post.category ||
+                        "मनोरंजन"
+                    )}
+                  </span>
+
+                  <h4>
+                    ${escapeHtml(
+                      post.title ||
+                        ""
+                    )}
+                  </h4>
+
+                  ${
+                    post.subtitle
+                      ? `
+                        <p>
+                          ${escapeHtml(
+                            post.subtitle
+                          )}
+                        </p>
+                      `
+                      : ""
+                  }
+
+                </div>
+
+              </article>
+            `
+          )
+          .join("")
+
+      : `
+          <div class="ent-side-empty">
+
+            <span class="section-tag">
+              मनोरंजन
+            </span>
+
+            <p>
+              बाकी entertainment posts
+              यहाँ दिखाई देंगी।
+            </p>
+
+          </div>
+        `;
+
+
+  mainEl
+    .querySelectorAll(
+      "[data-ent-id]"
+    )
+    .forEach((el) => {
+
+      el.addEventListener(
+        "click",
+        () =>
+          openReader(
+            el.dataset.entId
+          )
+      );
+
+    });
+
+
+  sideEl
+    .querySelectorAll(
+      "[data-ent-id]"
+    )
+    .forEach((el) => {
+
+      el.addEventListener(
+        "click",
+        () =>
+          openReader(
+            el.dataset.entId
+          )
+      );
+
+    });
+}
+
+
+/* =========================================================
    MAIN RENDER
 ========================================================= */
 
@@ -593,24 +899,28 @@ function render() {
     allPosts || [];
 
 
-  /* -----------------------------------------
-     Post Count
-  ----------------------------------------- */
-
   const postCount =
     document.getElementById(
       "postCount"
     );
 
+
   if (postCount) {
+
+    const storyCount =
+      posts.filter(
+        (post) =>
+          !isNewsPost(post) &&
+          !isEntertainmentPost(
+            post
+          )
+      ).length;
+
+
     postCount.textContent =
-      `${posts.length} POSTS`;
+      `${storyCount} POSTS`;
   }
 
-
-  /* -----------------------------------------
-     Existing Sections
-  ----------------------------------------- */
 
   const featured =
     document.getElementById(
@@ -629,19 +939,29 @@ function render() {
 
 
   /* -----------------------------------------
-     Render News
+     Dedicated sections
   ----------------------------------------- */
 
   renderNews(posts);
 
+  renderEntertainment(
+    posts
+  );
+
 
   /* -----------------------------------------
-     FEATURED STORY
+     FEATURED
   ----------------------------------------- */
 
-  const featuredPost =
-    posts[0];
+ const storyPosts =
+  posts.filter(
+    (post) =>
+      !isNewsPost(post) &&
+      !isEntertainmentPost(post)
+  );
 
+// Featured = latest uploaded post, category koi bhi ho
+const featuredPost = posts[0];
 
   if (featured) {
 
@@ -670,7 +990,6 @@ function render() {
             featuredPost.id
           )}"
         >
-
 
           <div class="feature-img">
 
@@ -749,44 +1068,40 @@ function render() {
 
 
   /* -----------------------------------------
-     ALL STORIES
+     STORIES ONLY
   ----------------------------------------- */
 
- /* -----------------------------------------
-   STORIES ONLY
-   News ko Stories section se alag rakho
------------------------------------------ */
+  if (postGrid) {
 
-const storyPosts = posts.filter(
-  (post) => !isNewsPost(post)
-);
+    if (!storyPosts.length) {
 
-if (postGrid) {
+      postGrid.innerHTML = `
+        <div class="empty-posts">
 
-  if (!storyPosts.length) {
+          <p>
+            अभी कोई published story नहीं है।
+          </p>
 
-    postGrid.innerHTML = `
-      <div class="empty-posts">
-        <p>
-          अभी कोई published story नहीं है।
-        </p>
-      </div>
-    `;
+        </div>
+      `;
 
-  } else {
+    } else {
 
-    postGrid.innerHTML =
-      storyPosts
-        .map(
-          (post) =>
-            createStoryCard(post)
-        )
-        .join("");
+      postGrid.innerHTML =
+        storyPosts
+          .map(
+            (post) =>
+              createStoryCard(
+                post
+              )
+          )
+          .join("");
+    }
   }
-}
+
 
   /* -----------------------------------------
-     CATEGORY CARDS
+     CATEGORY GRID
   ----------------------------------------- */
 
   if (categoryGrid) {
@@ -805,45 +1120,46 @@ if (postGrid) {
 
     categoryGrid.innerHTML =
       categories
-        .map((category) => {
+        .map(
+          (category) => {
 
-          const count =
-            posts.filter(
-              (post) =>
-                post.category ===
-                category
-            ).length;
-
-
-          return `
-            <a
-              class="cat-card"
-              href="#stories"
-              data-category="${escapeHtml(
-                category
-              )}"
-            >
-
-              <b>
-                ${escapeHtml(
+            const count =
+              posts.filter(
+                (post) =>
+                  post.category ===
                   category
-                )}
-              </b>
+              ).length;
 
-              <span>
-                ${count} STORIES ↗
-              </span>
 
-            </a>
-          `;
+            return `
+              <a
+                class="cat-card"
+                href="#stories"
+                data-category="${escapeHtml(
+                  category
+                )}"
+              >
 
-        })
+                <b>
+                  ${escapeHtml(
+                    category
+                  )}
+                </b>
+
+                <span>
+                  ${count} STORIES ↗
+                </span>
+
+              </a>
+            `;
+          }
+        )
         .join("");
   }
 
 
   /* -----------------------------------------
-     STORY CLICKS
+     STORY + FEATURED CLICK
   ----------------------------------------- */
 
   document
@@ -906,7 +1222,9 @@ if (postGrid) {
    CATEGORY FILTER
 ========================================================= */
 
-function filterCat(category) {
+function filterCat(
+  category
+) {
 
   const filtered =
     allPosts.filter(
@@ -922,19 +1240,24 @@ function filterCat(category) {
     );
 
 
-  if (postGrid) {
+  if (!postGrid) {
+    return;
+  }
 
-    postGrid.innerHTML =
-      filtered.length
 
-        ? filtered
-            .map(
-              (post) =>
-                createStoryCard(post)
-            )
-            .join("")
+  postGrid.innerHTML =
+    filtered.length
 
-        : `
+      ? filtered
+          .map(
+            (post) =>
+              createStoryCard(
+                post
+              )
+          )
+          .join("")
+
+      : `
           <div class="empty-posts">
 
             <p>
@@ -943,31 +1266,20 @@ function filterCat(category) {
 
           </div>
         `;
-  }
 
 
   document
     .querySelectorAll(
-      "[data-id]"
+      "#postGrid [data-id]"
     )
     .forEach((el) => {
 
       el.addEventListener(
         "click",
-        (event) => {
-
-          if (
-            event.target.closest(
-              "a, button"
-            )
-          ) {
-            return;
-          }
-
+        () =>
           openReader(
             el.dataset.id
-          );
-        }
+          )
       );
 
     });
@@ -1041,49 +1353,42 @@ function openReader(id) {
 
   if (readerCategory) {
     readerCategory.textContent =
-      current.category ||
-      "";
+      current.category || "";
   }
 
 
   if (readerDate) {
     readerDate.textContent =
-      current.date ||
-      "";
+      current.date || "";
   }
 
 
   if (readerTitle) {
     readerTitle.textContent =
-      current.title ||
-      "";
+      current.title || "";
   }
 
 
   if (readerSubtitle) {
     readerSubtitle.textContent =
-      current.subtitle ||
-      "";
+      current.subtitle || "";
   }
 
 
   if (readerImage) {
 
     readerImage.src =
-      current.image ||
-      "";
+      current.image || "";
 
     readerImage.alt =
-      current.title ||
-      "";
+      current.title || "";
   }
 
 
   if (readerBody) {
 
     readerBody.textContent =
-      current.content ||
-      "";
+      current.content || "";
   }
 
 
@@ -1292,7 +1597,8 @@ document
 
 
 /* =========================================================
-   SPEAK
+   SPEECH
+   Long stories/news are split into chunks
 ========================================================= */
 
 let speechChunks = [];
@@ -1374,6 +1680,7 @@ function splitTextForSpeech(
     } else {
 
       if (currentChunk) {
+
         chunks.push(
           currentChunk
         );
@@ -1413,6 +1720,7 @@ function splitTextForSpeech(
 
 
   if (currentChunk) {
+
     chunks.push(
       currentChunk
     );
@@ -1451,6 +1759,7 @@ function getSelectedVoice(
 
 
   if (selectedVoice) {
+
     return selectedVoice;
   }
 
@@ -1475,6 +1784,7 @@ function getSelectedVoice(
 
       null
     );
+
   }
 
 
@@ -1511,6 +1821,7 @@ function speakNextChunk() {
 
 
     if (speakBtn) {
+
       speakBtn.innerHTML =
         "▶ <span>सुनिए</span>";
     }
@@ -1524,8 +1835,8 @@ function speakNextChunk() {
 
 
     speechChunks = [];
-    speechIndex = 0;
 
+    speechIndex = 0;
 
     return;
   }
@@ -1572,6 +1883,7 @@ function speakNextChunk() {
     () => {
 
       if (speakBtn) {
+
         speakBtn.innerHTML =
           "■ <span>रोकें</span>";
       }
@@ -1599,6 +1911,7 @@ function speakNextChunk() {
         () => {
 
           if (!speechStopped) {
+
             speakNextChunk();
           }
 
@@ -1624,6 +1937,7 @@ function speakNextChunk() {
         () => {
 
           if (!speechStopped) {
+
             speakNextChunk();
           }
 
@@ -1649,6 +1963,7 @@ const speakStatus =
     "speakStatus"
   );
 
+
 const voiceSelect =
   document.getElementById(
     "voiceSelect"
@@ -1659,8 +1974,6 @@ if (speakBtn) {
 
   speakBtn.onclick =
     () => {
-
-      /* STOP */
 
       if (
         speechSynthesis.speaking
@@ -1695,8 +2008,6 @@ if (speakBtn) {
       }
 
 
-      /* NO CURRENT STORY */
-
       if (!current) {
 
         if (speakStatus) {
@@ -1704,6 +2015,7 @@ if (speakBtn) {
           speakStatus.textContent =
             "पहले कोई कहानी खोलें";
         }
+
 
         return;
       }
@@ -1722,15 +2034,9 @@ if (speakBtn) {
             "इस कहानी में content नहीं है";
         }
 
+
         return;
       }
-
-
-      const selectedLanguage =
-        document.getElementById(
-          "langSelect"
-        )?.value ||
-        "hi";
 
 
       speechStopped =
@@ -1755,6 +2061,7 @@ if (speakBtn) {
         () => {
 
           if (!speechStopped) {
+
             speakNextChunk();
           }
 

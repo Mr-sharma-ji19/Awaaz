@@ -904,104 +904,601 @@ h1,h2,h3,p,span,a,article { overflow-wrap:anywhere; }
 }
 
 
+/* Entertainment responsive */
+@media (max-width:1100px){
+  .ent-layout{
+    grid-template-columns:1fr;
+  }
+
+  .ent-side{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+  }
+
+  .ent-list-head{
+    grid-column:1 / -1;
+  }
+}
+
+@media (max-width:760px){
+  .entertainment-section{
+    padding:40px 18px 44px;
+  }
+
+  .ent-heading{
+    display:block;
+  }
+
+  .ent-heading h2{
+    font-size:clamp(42px,13vw,62px);
+  }
+
+  .ent-heading-note{
+    margin-top:14px;
+    justify-content:space-between;
+    align-items:flex-start;
+  }
+
+  .ent-heading-note p{
+    max-width:230px;
+    font-size:13px;
+  }
+
+  .ent-feature{
+    grid-template-columns:1fr;
+  }
+
+  .ent-feature-image{
+    min-height:250px;
+    height:250px;
+  }
+
+  .ent-feature-copy{
+    min-height:250px;
+    padding:22px 20px;
+  }
+
+  .ent-feature-copy h3{
+    font-size:clamp(32px,10vw,50px);
+  }
+
+  .ent-side{
+    grid-template-columns:1fr;
+  }
+}
+
+@media (max-width:520px){
+  .entertainment-section{
+    padding-left:14px;
+    padding-right:14px;
+  }
+
+  .ent-feature-image{
+    height:220px;
+    min-height:220px;
+  }
+
+  .ent-feature-copy{
+    padding:19px 17px;
+  }
+}
+
+
+/* =========================================================
+   AWAAZ — ENTERTAINMENT SECTION REDESIGN
+   Paste at the END of styles.css
+========================================================= */
+
+.entertainment-section{
+  margin-top: 0;
+  padding: 5vw 5vw 6vw;
+  border-top: 1px solid var(--ink);
+  background: var(--cream);
+}
+
+.entertainment-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:30px;
+  margin-bottom:28px;
+}
+
+.entertainment-head h2{
+  margin:10px 0 0;
+  font-family:var(--serif);
+  font-size:clamp(46px,5.4vw,78px);
+  line-height:.98;
+  letter-spacing:-.06em;
+}
+
+.entertainment-head p{
+  margin:0;
+  max-width:340px;
+  font-family:var(--serif);
+  font-size:15px;
+  line-height:1.6;
+  color:var(--muted);
+}
+
+#entertainmentCount{
+  font:10px var(--mono);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+
+/* Main entertainment layout */
+
+#entMain{
+  min-width:0;
+}
+
+.ent-main-grid{
+  display:grid;
+  grid-template-columns:minmax(0,1.65fr) minmax(280px,.85fr);
+  gap:20px;
+  align-items:start;
+}
+
+/* Featured entertainment card */
+
+.ent-feature{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(300px,.85fr);
+  min-height:460px;
+
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:26px;
+  overflow:hidden;
+
+  cursor:pointer;
+  box-shadow:0 18px 50px rgba(40,30,25,.06);
+
+  transition:
+    transform .3s ease,
+    box-shadow .3s ease;
+}
+
+.ent-feature:hover{
+  transform:translateY(-4px);
+  box-shadow:0 24px 60px rgba(40,30,25,.10);
+}
+
+.ent-feature-img{
+  min-height:460px;
+  overflow:hidden;
+  background:#e9e4dc;
+}
+
+.ent-feature-img img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  transition:transform .7s ease;
+}
+
+.ent-feature:hover .ent-feature-img img{
+  transform:scale(1.035);
+}
+
+.ent-feature-copy{
+  min-width:0;
+  padding:32px 30px 28px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  background:#efe2c9;
+}
+
+.ent-feature-copy h3{
+  margin:16px 0 12px;
+
+  font-family:var(--serif);
+  font-size:clamp(38px,4vw,64px);
+  line-height:1.02;
+  letter-spacing:-.055em;
+
+  overflow-wrap:anywhere;
+}
+
+.ent-feature-copy p{
+  margin:0;
+  max-width:420px;
+
+  font-family:var(--serif);
+  font-size:15px;
+  line-height:1.65;
+  color:var(--muted);
+}
+
+.ent-feature-copy .post-read{
+  width:max-content;
+  padding-bottom:7px;
+  border-bottom:1px solid var(--ink);
+
+  font:10px var(--mono);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+
+/* Side stories */
+
+#entSideList{
+  display:grid;
+  gap:14px;
+}
+
+.ent-side-item{
+  display:grid;
+  grid-template-columns:135px minmax(0,1fr);
+  gap:16px;
+
+  padding:12px;
+
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:18px;
+
+  cursor:pointer;
+
+  transition:
+    transform .25s ease,
+    box-shadow .25s ease;
+}
+
+.ent-side-item:hover{
+  transform:translateY(-3px);
+  box-shadow:0 14px 32px rgba(40,35,28,.07);
+}
+
+.ent-side-image{
+  width:135px;
+  height:115px;
+  border-radius:12px;
+  overflow:hidden;
+  background:#e9e4dc;
+}
+
+.ent-side-image img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+}
+
+.ent-side-item h4{
+  margin:7px 0 6px;
+
+  font-family:var(--serif);
+  font-size:25px;
+  line-height:1.1;
+  letter-spacing:-.035em;
+}
+
+.ent-side-item p{
+  margin:0;
+  color:var(--muted);
+
+  font-family:var(--serif);
+  font-size:13px;
+  line-height:1.5;
+}
+
+/* Empty states */
+
+.ent-empty,
+.ent-side-empty{
+  border:1px dashed rgba(17,17,17,.22);
+  border-radius:22px;
+  background:var(--surface, #fffdf9);
+  padding:36px;
+}
+
+.ent-empty h3{
+  margin:10px 0 8px;
+  font-family:var(--serif);
+  font-size:34px;
+  line-height:1.05;
+}
+
+.ent-empty p,
+.ent-side-empty p{
+  margin:0;
+  color:var(--muted);
+  font-family:var(--serif);
+  line-height:1.6;
+}
+
+/* Optional lower entertainment cards */
+
+.entertainment-more-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-top:18px;
+}
+
+.entertainment-more-card{
+  min-height:180px;
+  padding:22px;
+
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:20px;
+}
+
+.entertainment-more-card h3{
+  margin:14px 0 0;
+  font-family:var(--serif);
+  font-size:28px;
+  line-height:1.1;
+}
+
+/* Make sure this section doesn't interfere with existing sections */
+
+.entertainment-section img{
+  max-width:100%;
+}
+
+/* Tablet */
+
+@media (max-width: 1050px){
+  .ent-main-grid{
+    grid-template-columns:1fr;
+  }
+
+  #entSideList{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .entertainment-more-grid{
+    grid-template-columns:1fr 1fr;
+  }
+}
+
+/* Mobile */
+
+@media (max-width:760px){
+  .entertainment-section{
+    padding:38px 18px 44px;
+  }
+
+  .entertainment-head{
+    display:block;
+    margin-bottom:20px;
+  }
+
+  .entertainment-head h2{
+    font-size:clamp(44px,13vw,64px);
+  }
+
+  .entertainment-head p{
+    margin-top:12px;
+    font-size:14px;
+  }
+
+  .ent-main-grid{
+    grid-template-columns:1fr;
+  }
+
+  .ent-feature{
+    grid-template-columns:1fr;
+    min-height:0;
+  }
+
+  .ent-feature-img{
+    min-height:280px;
+    height:280px;
+  }
+
+  .ent-feature-copy{
+    min-height:285px;
+    padding:24px 20px 22px;
+  }
+
+  .ent-feature-copy h3{
+    font-size:clamp(34px,10vw,52px);
+  }
+
+  #entSideList{
+    grid-template-columns:1fr;
+  }
+
+  .ent-side-item{
+    grid-template-columns:110px minmax(0,1fr);
+  }
+
+  .ent-side-image{
+    width:110px;
+    height:98px;
+  }
+
+  .ent-side-item h4{
+    font-size:22px;
+  }
+
+  .entertainment-more-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* =========================================================
+   AWAAZ — ENTERTAINMENT SPACING COMPACT
+   Paste at the END of styles.css
+========================================================= */
+
+/* Reduce space around Entertainment section */
+.entertainment-section{
+  padding-top: 3vw !important;
+  padding-bottom: 2.4vw !important;
+  margin-bottom: 0 !important;
+}
+
+/* Reduce the gap after Entertainment before next section */
+.entertainment-section + .content-shell{
+  padding-top: 2.2vw !important;
+}
+
+/* Keep the Entertainment heading closer to its content */
+.entertainment-head{
+  margin-bottom: 20px !important;
+}
+
+/* Mobile */
+@media (max-width:760px){
+  .entertainment-section{
+    padding-top: 28px !important;
+    padding-bottom: 26px !important;
+  }
+
+  .entertainment-section + .content-shell{
+    padding-top: 28px !important;
+  }
+
+  .entertainment-head{
+    margin-bottom: 16px !important;
+  }
+}
 
 
 
 /* =========================================================
-   AWAAZ — FEATURED NEWS CARD FIX
-   Long Hindi/English headlines will stay inside the card.
-   ========================================================= */
+   AWAAZ — FIXED FEATURED CONTENT SIZE
+   Latest upload can be any title; featured card stays fixed.
+   Paste this at the END of styles.css.
+========================================================= */
 
 #featured .feature {
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, .98fr) !important;
+  height: 420px !important;
   min-height: 420px !important;
-  height: auto !important;
-  align-items: stretch !important;
+  max-height: 420px !important;
+
+  grid-template-columns: 58% 42% !important;
+  overflow: hidden !important;
 }
 
 #featured .feature-img {
-  min-width: 0 !important;
+  height: 420px !important;
   min-height: 420px !important;
-  height: auto !important;
+  max-height: 420px !important;
+  overflow: hidden !important;
 }
 
 #featured .feature-img img {
   width: 100% !important;
   height: 100% !important;
-  min-height: 420px !important;
   object-fit: cover !important;
-  object-position: center center !important;
 }
 
 #featured .feature-copy {
-  min-width: 0 !important;
+  height: 420px !important;
   min-height: 420px !important;
-  height: auto !important;
-  padding: 28px 28px 24px !important;
+  max-height: 420px !important;
+
+  padding: 28px 26px 24px !important;
   overflow: hidden !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
 }
 
-#featured .feature-copy h3 {
-  max-width: 100% !important;
-  margin: 14px 0 10px !important;
-
-  font-family: var(--serif) !important;
-  font-size: clamp(30px, 2.8vw, 48px) !important;
-  line-height: 1.02 !important;
-  letter-spacing: -.038em !important;
-  font-weight: 700 !important;
-
-  white-space: normal !important;
-  overflow-wrap: anywhere !important;
-  word-break: normal !important;
-}
-
-#featured .feature-copy p {
-  max-width: 100% !important;
-  margin-top: 10px !important;
-  font-size: 14px !important;
-  line-height: 1.55 !important;
+#featured .feature-copy > div {
+  min-height: 0 !important;
+  overflow: hidden !important;
 }
 
 #featured .feature-cat {
   margin-bottom: 8px !important;
-  font-size: 9px !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
 }
 
+/* Fixed headline size + max visible lines */
+#featured .feature-copy h3 {
+  margin: 12px 0 10px !important;
+
+  font-size: 42px !important;
+  line-height: 1.02 !important;
+  letter-spacing: -0.04em !important;
+  font-weight: 700 !important;
+
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 5 !important;
+  overflow: hidden !important;
+
+  overflow-wrap: anywhere !important;
+  word-break: normal !important;
+}
+
+/* Keep subtitles from expanding the card */
+#featured .feature-copy p {
+  margin: 10px 0 0 !important;
+
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical !important;
+  -webkit-line-clamp: 3 !important;
+  overflow: hidden !important;
+
+  max-height: 64px !important;
+}
+
+/* Keep Listen link fixed at the bottom */
 #featured .read-link {
-  margin-top: 18px !important;
-  font-size: 9px !important;
-  flex-shrink: 0 !important;
+  flex: 0 0 auto !important;
+  margin-top: 14px !important;
 }
 
-/* Keep featured card compact on medium screens */
+/* Medium desktop */
 @media (max-width: 1180px) and (min-width: 761px) {
   #featured .feature-copy h3 {
-    font-size: clamp(28px, 3.1vw, 44px) !important;
+    font-size: 36px !important;
+    -webkit-line-clamp: 6 !important;
   }
 }
 
-/* Mobile */
+/* Mobile keeps a fixed, smaller card */
 @media (max-width: 760px) {
   #featured .feature {
+    height: 500px !important;
+    min-height: 500px !important;
+    max-height: 500px !important;
+
     grid-template-columns: 1fr !important;
   }
 
   #featured .feature-img {
-    min-height: 250px !important;
     height: 250px !important;
-  }
-
-  #featured .feature-img img {
     min-height: 250px !important;
+    max-height: 250px !important;
   }
 
   #featured .feature-copy {
-    min-height: 0 !important;
+    height: 250px !important;
+    min-height: 250px !important;
+    max-height: 250px !important;
+
     padding: 20px !important;
   }
 
   #featured .feature-copy h3 {
-    font-size: clamp(30px, 10vw, 48px) !important;
+    font-size: 32px !important;
+    line-height: 1.03 !important;
+    -webkit-line-clamp: 4 !important;
+  }
+
+  #featured .feature-copy p {
+    font-size: 13px !important;
+    -webkit-line-clamp: 2 !important;
+    max-height: 42px !important;
   }
 }
