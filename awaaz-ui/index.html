@@ -7,115 +7,262 @@
   <title>Awaaz — Stories, News & Ideas</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
   <header class="nav">
-    <a class="brand" href="index.html"><span class="brand-mark">आ</span><strong>WAAZ</strong></a>
+    <a class="brand" href="index.html">
+      <span class="brand-mark">आ</span><strong>WAAZ</strong>
+    </a>
+
     <nav class="main-nav">
       <a href="#stories">Stories</a>
       <a href="#news">News</a>
       <a href="#ideas">Ideas</a>
+      <a class="nav-about" href="#about">About</a>
       <a class="nav-admin" href="admin.html">Admin ↗</a>
     </nav>
+
     <button class="menu-btn" aria-label="Menu"><i></i><i></i></button>
   </header>
 
   <main>
+
     <section class="showcase-hero">
       <div class="hero-copy">
         <div class="eyebrow">AWAAZ / DIGITAL READING JOURNAL</div>
+
         <h1>कहानियाँ<br><span>जो सुनाई दें।</span></h1>
-        <p>ख़बर, कहानी और विचार — साफ़ भाषा, सुंदर प्रस्तुति और जब चाहो तब सुनने की सुविधा के साथ।</p>
+
+        <p>
+          ख़बर, कहानी और विचार — साफ़ भाषा, सुंदर प्रस्तुति
+          और जब चाहो तब सुनने की सुविधा के साथ।
+        </p>
+
         <div class="hero-links">
           <a href="#stories">आज की कहानियाँ <span>↘</span></a>
-          <a href="#ideas">विचार पढ़ें <span>↘</span></a>
           <a href="#news">ताज़ा खबरें <span>↘</span></a>
+          <a href="#ideas">विचार पढ़ें <span>↘</span></a>
         </div>
       </div>
 
       <div class="hero-stage" aria-label="Featured story preview">
-        <div class="stage-topbar">
-          <span>01 / FEATURED</span><span>READ · LISTEN</span>
-        </div>
-        <div id="featured" class="hero-featured"></div> 
-         <div class="stage-footer">
+       <div class="stage-topbar">
+  <span>आज की आवाज़</span>
+  <span>READ · LISTEN</span>
+</div>
+
+        <div id="featured" class="hero-featured"></div>
+
+        <div class="stage-footer">
           <span>शांत पढ़ना। साफ़ आवाज़।</span>
           <a href="#stories">Explore stories ↗</a>
         </div>
       </div>
-
-      <!-- <div class="hero-stack" aria-hidden="true">
-        <div class="stack-card stack-card-back">
-          <span>02 / IDEAS</span>
-          <b>धीरे पढ़ना भी<br>एक कला है।</b>
-        </div>
-        <div class="stack-card stack-card-front">
-          <span>03 / NEWS</span>
-          <b>कम शोर।<br>ज़्यादा समझ।</b>
-          <small>आज की जरूरी बातें, आसान भाषा में।</small>
-        </div>
-      </div> -->
     </section>
 
-    <!-- <section class="marquee-bar" id="news">
-      <div class="marquee-track">ख़बर · कहानी · विचार · इतिहास · आवाज़ · सुनो · पढ़ो · ठहरो · ख़बर · कहानी · विचार · इतिहास · आवाज़ ·</div>
-    </section> -->
+    <!-- ================= NEWS ================= -->
+    <section class="news-section" id="news">
+      <div class="news-heading">
+        <div>
+          <span class="eyebrow">LATEST NEWS</span>
+          <h2>आज की खबर</h2>
+        </div>
 
+        <div class="news-heading-note">
+          <span id="newsCount">0 NEWS</span>
+          <p>कम शोर। ज़्यादा समझ।<br>ज़रूरी खबरें, साफ़ भाषा में।</p>
+        </div>
+      </div>
+
+      <div class="news-layout">
+        <div class="news-side" id="newsSide"></div>
+
+        <article class="news-feature" id="newsMain">
+          <div class="news-feature-meta">
+            <span id="newsMainCategory">खबर</span>
+            <span id="newsMainDate"></span>
+          </div>
+
+          <h3 id="newsMainTitle">आज की खबरें</h3>
+          <p id="newsMainSubtitle">ताज़ा अपडेट यहाँ दिखाई देंगे।</p>
+
+          <div class="news-feature-image">
+            <img
+              id="newsMainImage"
+              src="https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1800&q=85"
+              alt="Featured news"
+            >
+          </div>
+
+          <div class="news-feature-footer">
+            <span>पढ़ें · सुनें</span>
+            <button type="button" id="newsReadButton">पूरी खबर ↗</button>
+          </div>
+        </article>
+
+        <aside class="news-brief">
+          <div class="brief-card">
+            <span class="section-tag">AWAAZ BRIEFING</span>
+            <h3>आज की जरूरी खबरें</h3>
+            <ol id="newsBriefList">
+              <li>Published news यहाँ दिखाई देंगी।</li>
+            </ol>
+          </div>
+
+          <div class="quick-card">
+            <span class="section-tag">STAY INFORMED</span>
+            <h4>खबर पढ़ें, फिर उसकी पूरी कहानी समझें।</h4>
+            <a href="#stories">Stories देखें ↗</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ================= STORIES ================= -->
     <section class="content-shell" id="stories">
       <div class="section-intro">
         <div>
           <span class="eyebrow">LATEST JOURNAL</span>
           <h2>आज क्या पढ़ें?</h2>
         </div>
-        <div class="section-note"><span id="postCount">0 POSTS</span><p>एक जगह जहाँ अच्छी कहानी<br>थोड़ा और ठहरने को कहती है।</p></div>
+
+        <div class="section-note">
+          <span id="postCount">0 POSTS</span>
+          <p>एक जगह जहाँ अच्छी कहानी<br>थोड़ा और ठहरने को कहती है।</p>
+        </div>
       </div>
 
       <div id="postGrid" class="post-grid"></div>
     </section>
 
+    <!-- ================= LISTEN ================= -->
     <section class="listen-banner">
       <div class="listen-label">READ IT / HEAR IT</div>
+
       <div class="listen-copy">
         <h2>हर कहानी की<br><em>अपनी आवाज़</em> होती है।</h2>
         <p>पढ़ने का मन हो तो पढ़ो। आँखें थकें तो कहानी सुन लो।</p>
       </div>
+
       <a class="listen-cta" href="#stories">कहानी चुनें ↗</a>
     </section>
 
+    <!-- ================= CATEGORIES ================= -->
     <section class="content-shell categories-section" id="ideas">
       <div class="section-intro compact-intro">
-        <div><span class="eyebrow">EXPLORE BY MOOD</span><h2>अपनी पसंद चुनें</h2></div>
+        <div>
+          <span class="eyebrow">EXPLORE BY MOOD</span>
+          <h2>अपनी पसंद चुनें</h2>
+        </div>
+
         <p>कहानी से इतिहास तक — अपनी रफ्तार से।</p>
       </div>
+
       <div id="categoryGrid" class="category-grid"></div>
     </section>
 
+    <!-- ================= ABOUT ================= -->
+    <section class="about-section" id="about">
+      <div class="about-top">
+        <span class="eyebrow">ABOUT AWAAZ</span>
+        <h2>एक जगह, जहाँ<br><em>शब्द ठहरते हैं।</em></h2>
+      </div>
+
+      <div class="about-grid">
+        <div class="about-copy">
+          <p>
+            Awaaz एक ऐसी जगह बनाने की कोशिश है जहाँ Hindi और English
+            में कहानियाँ, खबरें और विचार modern presentation, आसान reading
+            और सुनने की सुविधा के साथ पेश किए जा सकें।
+          </p>
+
+          <p>
+            पढ़ना हो तो पढ़िए। मन करे तो वही कहानी सुनिए।
+            मकसद content को शोर में खोना नहीं, बल्कि उसे थोड़ा और
+            ध्यान से महसूस करने की जगह बनाना है।
+          </p>
+        </div>
+
+        <div class="creator-card">
+          <span class="section-tag">CREATED WITH CARE</span>
+          <h3>Ritesh Sharma</h3>
+          <p>
+            Awaaz की शुरुआत एक छोटी-सी कोशिश से हुई —
+            पढ़ने और सुनने के बीच की दूरी को थोड़ा कम करने की।
+          </p>
+          <span class="creator-note">Creator · Designer · Developer</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
     <footer class="footer">
       <div class="footer-brand"><span>आ</span> WAAZ</div>
-      <div class="footer-row"><span>Stories · News · Ideas</span><span>Made for slow reading.</span><a href="admin.html">Admin Panel ↗</a></div>
+
+      <div class="footer-row">
+        <span>Stories · News · Ideas</span>
+        <span>Made for slow reading.</span>
+        <a href="admin.html">Admin Panel ↗</a>
+      </div>
     </footer>
+
   </main>
 
+  <!-- ================= READER ================= -->
   <dialog id="reader">
     <div class="reader-wrap">
       <button class="close" id="closeReader" aria-label="Close">×</button>
-      <div class="reader-meta"><span id="readerCategory"></span><span id="readerDate"></span></div>
+
+      <div class="reader-meta">
+        <span id="readerCategory"></span>
+        <span id="readerDate"></span>
+      </div>
+
       <h2 id="readerTitle"></h2>
       <p id="readerSubtitle" class="reader-subtitle"></p>
-      <div class="reader-cover"><img id="readerImage" alt=""></div>
+
+      <div class="reader-cover">
+        <img id="readerImage" alt="">
+      </div>
+
       <div class="reader-layout">
         <article id="readerBody"></article>
+
         <aside class="listen-box">
           <div class="listen-label">LISTEN TO THIS STORY</div>
-          <button id="speakBtn" class="speak-btn">▶ <span>सुनिए</span></button>
-          <div class="voice-row"><label>भाषा</label><select id="langSelect"><option value="hi">हिन्दी</option><option value="en">English</option></select></div>
-          <div class="voice-row"><label>आवाज़</label><select id="voiceSelect"></select></div>
-          <div class="speed"><button data-rate=".8">0.8×</button><button class="active" data-rate="1">1×</button><button data-rate="1.2">1.2×</button><button data-rate="1.5">1.5×</button></div>
-          <div class="progress-line"><span id="speakStatus">तैयार है</span></div>
+
+          <button id="speakBtn" class="speak-btn">
+            ▶ <span>सुनिए</span>
+          </button>
+
+          <div class="voice-row">
+            <label>भाषा</label>
+            <select id="langSelect">
+              <option value="hi">हिन्दी</option>
+              <option value="en">English</option>
+            </select>
+          </div>
+
+          <div class="voice-row">
+            <label>आवाज़</label>
+            <select id="voiceSelect"></select>
+          </div>
+
+          <div class="speed">
+            <button data-rate=".8">0.8×</button>
+            <button class="active" data-rate="1">1×</button>
+            <button data-rate="1.2">1.2×</button>
+            <button data-rate="1.5">1.5×</button>
+          </div>
+
+          <div class="progress-line">
+            <span id="speakStatus">तैयार है</span>
+          </div>
         </aside>
       </div>
     </div>
   </dialog>
 
-  <script type="module" src="app.js?v=4"></script>
+  <script type="module" src="app.js?v=5"></script>
 </body>
 </html>
